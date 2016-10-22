@@ -3,9 +3,7 @@ import numpy as np
 
 def simple_move_aveage(data, n):
     pre = np.tile([0.0], [len(data) + 1])
-    for i in range(0, len(data)):
-        if i+n > len(data):
-            break
+    for i in range(0, len(data) - n + 1):
         if i is 0:
             k = i + n
         else :
