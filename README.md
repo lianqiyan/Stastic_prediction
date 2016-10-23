@@ -1,2 +1,2 @@
-# python_with_R
-Learning static in python mixed with R   
+# Stastic and prediction
+Some programing skill in stastic or algorithms I learned in static and prediction lesson   
