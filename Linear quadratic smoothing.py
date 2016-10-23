@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def simple_move_aveage(data, n):
+def simple_move_average(data, n):
     if data[0] == 0.0:
         for i in range(0, len(data)):
             if data[i] != 0:
@@ -27,8 +27,8 @@ def simple_move_aveage(data, n):
 
 
 def cal_a_b(dat1, dat2, N):
-    at = np.tile([0.0], len(dat1))
-    bt = np.tile([0.0], len(dat1))
+    at = np.tile([0.0], dat1.shape[0])
+    bt = np.tile([0.0], dat1.shape[0])
     for i in range(0, len(dat1)):
         if dat1[i] != 0 and dat2[i] != 0:
             at[i] = 2 * dat1[i] - dat2[i]
@@ -37,7 +37,7 @@ def cal_a_b(dat1, dat2, N):
 
 
 def predict(a, b, T):
-    Ft = np.tile([0.0], len(a)+1)
+    Ft = np.tile([0.0], a.shape[0]+1)
     for i in range(0, len(a)):
         if a[i] != 0.0:
             Ft[i+1] = a[i] + b[i] * T
