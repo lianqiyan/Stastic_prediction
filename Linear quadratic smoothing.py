@@ -45,9 +45,9 @@ def predict(a, b, T):
 
 
 pure = [125, 135, 195, 197, 186, 175, 155, 190, 220,219, 226, 198, 260, 245]
-S1 = simple_move_aveage(pure, 3)
+S1 = simple_move_average(pure, 3)
 print(S1)
-S2 = simple_move_aveage(S1, 3)
+S2 = simple_move_average(S1, 3)
 print(S2)
 at, bt = cal_a_b(S1, S2, 3)
 print(at, '\n', bt)
