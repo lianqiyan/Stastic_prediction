@@ -25,32 +25,41 @@ def get_std(dat):
     return s
 
 
-def cal_error(pdat, dat, pho):
+def test_model(pdat, dat, pho):
+    # Residual test
     abs_er = np.abs(pdat - dat)
     rel_er = abs_er/dat
     if np.max(rel_er) < 0.05:
-        print("The accuracy of the model is high!")
+        print("The model passed Residual Test, The accuracy of the model is high!")
     else:
-        print("The accuracy of the model is just fine")
+        print("Residual Test failed, the accuracy of the model is not good enough")
     amin = np.min(abs_er)
     amax = np.max(abs_er)
     p = lambda x: (amin + pho*amax)/(x + pho*amax)
+    # test r: the value of r should be bigger than 0.6 when pho is 0.5
     eta = p(abs_er)  # correlation coefficient
     r = np.sum(eta) / eta.shape[0]  # correlation degree
+    if r > 0.6:
+        print("The model passed Correlation Degree Test!")
+    else:
+        print("The degree of correlation is not good enough")
     p_std = get_std(dat)  # std of raw data
     abs_std = get_std(abs_er)  # std of absolute error
     c = abs_std/p_std
     S0 = 0.6745*p_std
     ei = np.abs(abs_er - np.mean(abs_er))
-    if np.sum(ei > np.tile(S0, len(ei))) == 0 and c < 0.35:
-        print("The model was tested well")
-    else:
-        print("Oh...It seems like not good enough")
-    print('C:', c, '\n', 'S0:', S0, '\n', 'ei:', ei)
+    p = np.sum(ei < np.tile(S0, len(ei)))/len(ei)
+    if p > 0.95 and c < 0.35:
+        print()
+    # if np.sum(ei > np.tile(S0, len(ei))) == 0 and c < 0.35:
+    #     print("The model was tested well")
+    # else:
+    #     print("Oh...It seems like not good enough")
+    # print('C:', c, '\n', 'S0:', S0, '\n', 'ei:', ei)
 
 
 data = np.array([26.7, 31.5, 32.8, 34.1, 35.8, 37.5])
 pre, pr = GM(data)
-cal_error(pre, data, 0.5)
+test_model(pre, data, 0.5)
 N8 = pr(7) - pr(6)
 print('The prediction of No.8 is ', N8)
