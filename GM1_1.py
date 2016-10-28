@@ -32,7 +32,7 @@ def test_model(pdat, dat, pho):
     if np.max(rel_er) < 0.05:
         print("The model passed Residual Test, The accuracy of the model is high!")
     else:
-        print("Residual Test failed, the accuracy of the model is not good enough")
+        print("Residual Test failed, The accuracy of the model is not good enough")
     amin = np.min(abs_er)
     amax = np.max(abs_er)
     p = lambda x: (amin + pho*amax)/(x + pho*amax)
@@ -50,16 +50,18 @@ def test_model(pdat, dat, pho):
     ei = np.abs(abs_er - np.mean(abs_er))
     p = np.sum(ei < np.tile(S0, len(ei)))/len(ei)
     if p > 0.95 and c < 0.35:
-        print()
-    # if np.sum(ei > np.tile(S0, len(ei))) == 0 and c < 0.35:
-    #     print("The model was tested well")
-    # else:
-    #     print("Oh...It seems like not good enough")
-    # print('C:', c, '\n', 'S0:', S0, '\n', 'ei:', ei)
+        print("The model passed Posterior Difference Tests very well!")
+    elif 0.8 < p < 0.95 and 0.35 < c < 0.5:
+        print("The model passed Posterior Difference Tests1")
+    elif 0.7 < p < 0.8 and 0.5 < c < 0.65:
+        print("The model barely passed  Difference Tests！")
+    elif p < 0.6 and c > 0.65 :
+        print("The model failed  Difference Tests ")
 
 
 data = np.array([26.7, 31.5, 32.8, 34.1, 35.8, 37.5])
 pre, pr = GM(data)
+print('Prediction: ', pre)
 test_model(pre, data, 0.5)
 N8 = pr(7) - pr(6)
 print('The prediction of No.8 is ', N8)
