@@ -12,7 +12,6 @@ df = pd.DataFrame({'x': x,
                    'y': y,
                    'color': color})
 rdf = pandas2ri.py2ri(df)
-# print(type(rdf))
 plt.figure(1)
 pp = ggplot2.ggplot(rdf) + \
      ggplot2.aes_string(x='x', y='y', fill='color') + \
@@ -32,4 +31,3 @@ vv = ggplot2.ggplot(rdf) + \
      ggplot2.geom_bar(width=1) +\
      ggplot2.coord_polar(theta='x')
 vv.plot()
-
